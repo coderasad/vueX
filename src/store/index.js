@@ -8,7 +8,7 @@ export default new Vuex.Store({
         bookList: []
     },
     getters  : {
-        totalBook: state => {
+        totalBooks(state) {
             return state.bookList.length;
         }
     },
