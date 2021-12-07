@@ -48,19 +48,23 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['totalBooks']),
-        ...mapState(['bookList']),
+        ...mapGetters({
+            totalBooks: 'books/totalBooks',
+            bookList: 'books/books',
+        })
     },
     methods : {
         addBook() {
             this.bookName.time = (new Date()).getTime()
-            this.$store.dispatch("addBook", this.bookName);
+            this.$store.dispatch("books/addBook", this.bookName);
             this.bookName = {
                 title: '',
                 time : ''
             }
         },
-        ...mapActions(['deleteBook'])
+        ...mapActions({
+            deleteBook: 'books/deleteBook'
+        })
     },
 
 }
