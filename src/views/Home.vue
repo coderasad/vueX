@@ -11,20 +11,20 @@
                 <div class="col-6"></div>
                 <div class="col-12">
                     <div class="badge bg-warning w-100 mb-3 py-2 fs-5">
-                        Total Book {{ totalBook }}
+                        Total Book {{ totalBooks }}
                     </div>
                 </div>
-                <div class="col-4 mb-3" v-for="(bookList,index) in bookLists">
+                <div class="col-4 mb-3" v-for="(book,index) in bookList" :key="index">
                     <div class="card">
                         <div class="card-header">
                             Title <b>{{ index + 1 }}</b>
                         </div>
                         <div class="card-body d-flex justify-content-between">
-                            <h5 class="card-title">{{ bookList.title }}</h5>
+                            <h5 class="card-title">{{ book.title }}</h5>
                             <button @click="deleteBook(index)" class="btn btn-danger">Delete</button>
                         </div>
                         <div class="card-footer text-muted">
-                            {{ bookList.time | diffForHumans }}
+                            {{ book.time | diffForHumans }}
                         </div>
                     </div>
                 </div>
@@ -48,22 +48,23 @@ export default {
         }
     },
     computed: {
-        ...mapState({
-            bookLists: "bookList"
-        }),
         ...mapGetters({
-            totalBook: 'totalBook'
+            totalBooks: 'books/totalBooks',
+            bookList: 'books/books',
         })
     },
     methods : {
-        ...mapActions({
-            deleteBook: 'deleteBook'
-        }),
         addBook() {
-            // this.bookName.title =  this.bookName.title
-            // this.bookName.time = (new Date()).getTime()
-            this.$store.dispatch("addBook", this.bookName);
+            this.bookName.time = (new Date()).getTime()
+            this.$store.dispatch("books/addBook", this.bookName);
+            this.bookName = {
+                title: '',
+                time : ''
+            }
         },
+        ...mapActions({
+            deleteBook: 'books/deleteBook'
+        })
     },
 
 }
